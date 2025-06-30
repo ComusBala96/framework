@@ -1,0 +1,59 @@
+{
+    "name": "orian/framework",
+    "description": "A framework package for OrianSoft and OrianSoft Clients.",
+    "version": "1.0.0",
+    "keywords": [
+        "OrianSoft",
+        "laravel",
+        "Orian"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "OrianSoft",
+            "email": "info@oriansoft.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Orian\\Framework\\": "src/",
+            "Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Orian\\Framework\\Providers\\OrianHelperServiceProvider"
+            ],
+            "aliases": {
+                "Helper": "Orian\\Framework\\Facades\\HelperFacade",
+                "Constant": "Orian\\Framework\\Facades\\ConstantFacade"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

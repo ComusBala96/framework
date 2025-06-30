@@ -1,0 +1,13 @@
+{
+    "name": "@orian/laravel",
+    "description": "All packages scripts are defined here.",
+    "version": "1.0.0",
+    "main": "laravel.js",
+    "keywords": [],
+    "author": {
+        "name": "OrianSoft",
+        "email": "info@oriansoft.com"
+    },
+    "license": "MIT",
+    "dependencies": {}
+}

@@ -1,0 +1,173 @@
+<?php
+
+namespace Orian\Framework\Helper;
+
+use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
+
+class Helper
+{
+    public static function getFilesRecursively($directory, $prepend)
+    {
+        $files = [];
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
+        foreach ($iterator as $fileInfo) {
+            if ($fileInfo->isFile()) {
+                $relativePath = $prepend . '/' . ltrim(str_replace($directory, '', $fileInfo->getPathname()), DIRECTORY_SEPARATOR);
+                $files[] = $relativePath;
+            }
+        }
+
+        return $files;
+    }
+
+    public static function getPageDefault($base, $request)
+    {
+        return [
+            'base' => $base,
+            'item' => null,
+            'items' => [],
+            'lang' => null,
+            'type' => (isset($request->uuid)) ? 'edit' : 'page'
+        ];
+    }
+
+    public static function createDir($dir)
+    {
+        if (!is_dir(public_path($dir))) {
+            File::makeDirectory(public_path($dir), 0777, true, true);
+        }
+    }
+
+    public static function metaImage()
+    {
+        return [
+            'favicon' => 'favicon.ico',
+            'logo' => 'logo.png',
+            'logo_dark' => 'logo-dark.png',
+            'auth' => 'statics/images/auth.jpg',
+            'loader' => 'statics/images/loader.gif',
+            'profile' => 'statics/images/profile.png',
+            'cover' => 'statics/images/cover.png',
+            'qr' => 'statics/images/qr.png',
+            'glob' => 'statics/images/glob.png',
+            '404' => 'statics/images/404.png',
+            'no_data' => 'statics/images/no_data.jpg',
+        ];
+    }
+
+    public static function paths()
+    {
+        return [
+            'root' => 'storage/uploads/',
+            'summernote' => 'storage/uploads/summernote/',
+            'jodit' => 'storage/uploads/jodit/',
+            'logo' => 'storage/uploads/logo/',
+            'user' => 'storage/uploads/user/',
+            'news_main' => 'storage/uploads/news/main/',
+            'news_images' => 'storage/uploads/news/images/',
+            'news_files' => 'storage/uploads/news/file/',
+            'gallery_main' => 'storage/uploads/gallery/main/',
+            'gallery_images' => 'storage/uploads/gallery/images/',
+            'gallery_files' => 'storage/uploads/gallery/file/',
+            'video_main' => 'storage/uploads/video/main/',
+            'video_thumb' => 'storage/uploads/video/thumb/',
+            'poll_image' => 'storage/uploads/news/post/poll/',
+            'vote_image' => 'storage/uploads/news/post/vote/',
+            'ad_image' => 'storage/uploads/ads/main/',
+            'ad_image_additional' => 'storage/uploads/ads/additional/',
+            'mail' => 'storage/uploads/mail/attachment/',
+            'backup_db' => 'storage/backup/db/',
+            'assets' => 'storage/uploads/',
+            'backup_assets' => 'storage/backup/assets/',
+            'block' => 'storage/uploads/block/',
+        ];
+    }
+
+    public static function oldPaths()
+    {
+        return [
+            'news' => 'statics/images/news/',
+            'block' => 'statics/images/block/images/',
+        ];
+    }
+
+    public static function createImages($image, $size = [], $path = '', $name = '', $ext = '', $scope = 1, $type = 'variant')
+    {
+        foreach ($size as $key => $item) {
+            $img = Image::make($image)->encode($ext, $scope);
+            $img->resize($item['width'], $item['height'], function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            });
+            if ($type == 'variant') {
+                $img->save(public_path($path . $name . '_' . $item['width'] . 'x' . $item['height'] . '.' . $ext));
+            } else {
+                $img->save(public_path($path . $name . '.' . $ext));
+            }
+        }
+    }
+
+    public static function createRawFiles($file, $size = [], $path = '', $name = '', $ext = '', $type = 'variant')
+    {
+        if ($type == 'variant') {
+            foreach ($size as $key => $item) {
+                Storage::put($path . $name . '_' . $item['width'] . 'x' . $item['height'] . '.' . $ext, file_get_contents($file));
+            }
+        } else {
+            Storage::put($path . $name . '.' . $ext, file_get_contents($file));
+        }
+    }
+
+    public static function deleteFile($file)
+    {
+        if (File::exists($file)) {
+            File::delete($file);
+        }
+    }
+
+    public static function deleteDirectory($root)
+    {
+        if (File::exists(public_path($root))) {
+            File::deleteDirectory(public_path($root));
+        }
+    }
+
+    public static function createImageSize($size = [])
+    {
+        $width = $size['width'];
+        $height = $size['height'];
+        return '_' . $width . 'x' . $height . '.';
+    }
+
+    public static function exceptColumns($table, $except = [])
+    {
+        $columns = Schema::getColumnListing($table);
+        return array_diff($columns, $except);
+    }
+
+    public static function isValidUtf8($text): bool
+    {
+        return mb_detect_encoding($text, 'UTF-8', true) !== false;
+    }
+
+    public static function active($url = '')
+    {
+        if (request()->is($url) || request()->is($url . '/*')) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function bn_number($number)
+    {
+        $en = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        $bn = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+        return str_replace($en, $bn, $number);
+    }
+}
