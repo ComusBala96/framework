@@ -34,7 +34,7 @@ php artisan vendor:publish --tag="framework-config"
 
 ## Credits
 
-- [:author_name](https://github.com/comusbala96)
+- [Comus Bala](https://github.com/comusbala96)
 
 ## License
 
