@@ -31,7 +31,7 @@ class OrianHelperServiceProvider extends ServiceProvider
 
     protected function loadHelpers()
     {
-        foreach (glob(__DIR__ . '../Helper/Functions.php') as $filename) {
+        foreach (glob(__DIR__ . '/../Helper/Functions.php') as $filename) {
             require_once $filename;
         }
     }
