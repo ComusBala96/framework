@@ -4,6 +4,7 @@ namespace Orian\Framework\Constant;
 
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Facades\File;
+use Orian\Framework\Helper\Helper;
 
 class Constant
 {
@@ -297,19 +298,19 @@ class Constant
             'google_secret' => config('config.google_secret', env('GOOGLE_CLIENT_SECRET', '487644642')),
             'analytics_id' => config('config.analytics_id', env('ANALYTICS_PROPERTY_ID', '487644642')),
             'dt_size' => config('config.dt_size', env('APP_DEFAULT_DT_SIZE', '15')),
-            'profile_image_format' => 'jpg', 'profile_image_accepts' => json_encode(defaultImageAccepts()),
-            'profile_image_size' => json_encode(defaultProfileSize()),
+            'profile_image_format' => 'jpg', 'profile_image_accepts' => json_encode($this->defaultImageAccepts()),
+            'profile_image_size' => json_encode($this->defaultProfileSize()),
             'cover_image_format' => 'jpg',
-            'cover_image_accepts' => json_encode(defaultImageAccepts()),
-            'cover_image_size' => json_encode(defaultCoverSize()),
-            'post_image_format' => 'jpg', 'post_image_accepts' => json_encode(defaultImageAccepts()),
-            'post_image_size' => json_encode(defaultPostImageSize()),
-            'ad_image_format' => 'jpg', 'ad_image_accepts' => json_encode(defaultImageAccepts()),
-            'ad_image_size' => json_encode(defaultAdImageSize()),
+            'cover_image_accepts' => json_encode($this->defaultImageAccepts()),
+            'cover_image_size' => json_encode($this->defaultCoverSize()),
+            'post_image_format' => 'jpg', 'post_image_accepts' => json_encode($this->defaultImageAccepts()),
+            'post_image_size' => json_encode($this->defaultPostImageSize()),
+            'ad_image_format' => 'jpg', 'ad_image_accepts' => json_encode($this->defaultImageAccepts()),
+            'ad_image_size' => json_encode($this->defaultAdImageSize()),
             'video_format' => 'mp4',
-            'video_accepts' => json_encode(defaultVideoAccepts()),
-            'file_format' => json_encode(defaultFileFormat()),
-            'file_accepts' => json_encode(defaultFileAccepts()),
+            'video_accepts' => json_encode($this->defaultVideoAccepts()),
+            'file_format' => json_encode($this->defaultFileFormat()),
+            'file_accepts' => json_encode($this->defaultFileAccepts()),
             'created_by' => 1,
             'created_at' => $now,
             'updated_at' => $now,
@@ -340,7 +341,7 @@ class Constant
     public static function defaultBlocks()
     {
         $path = paths()['block'];
-        createDir($path);
+        Helper::createDir($path);
         File::cleanDirectory($path);
         $files = File::files(public_path('statics/block/images/'));
         $now = now();
@@ -348,7 +349,7 @@ class Constant
         foreach ($files as $key => $file) {
             $name = (string)Uuid::generate(4);
             $ext = pathinfo($file, PATHINFO_EXTENSION);
-            createImages($file, [['width' => 360, 'height' => 180]], $path, $name, $ext, 1, 'noVariant');
+            Helper::createImages($file, [['width' => 360, 'height' => 180]], $path, $name, $ext, 1, 'noVariant');
             $blocks[] = ['uuid' => (string)Uuid::generate(4), 'serial' => $key + 1, 'name' => 'Block-' . ($key + 1), 'image' => $name . '.' . $ext, 'created_by' => 1, 'created_at' => $now, 'updated_at' => $now, ];
         }
         return $blocks;
