@@ -61,42 +61,6 @@ class Helper
         ];
     }
 
-    public static function paths()
-    {
-        return [
-            'root' => 'storage/uploads/',
-            'summernote' => 'storage/uploads/summernote/',
-            'jodit' => 'storage/uploads/jodit/',
-            'logo' => 'storage/uploads/logo/',
-            'user' => 'storage/uploads/user/',
-            'news_main' => 'storage/uploads/news/main/',
-            'news_images' => 'storage/uploads/news/images/',
-            'news_files' => 'storage/uploads/news/file/',
-            'gallery_main' => 'storage/uploads/gallery/main/',
-            'gallery_images' => 'storage/uploads/gallery/images/',
-            'gallery_files' => 'storage/uploads/gallery/file/',
-            'video_main' => 'storage/uploads/video/main/',
-            'video_thumb' => 'storage/uploads/video/thumb/',
-            'poll_image' => 'storage/uploads/news/post/poll/',
-            'vote_image' => 'storage/uploads/news/post/vote/',
-            'ad_image' => 'storage/uploads/ads/main/',
-            'ad_image_additional' => 'storage/uploads/ads/additional/',
-            'mail' => 'storage/uploads/mail/attachment/',
-            'backup_db' => 'storage/backup/db/',
-            'assets' => 'storage/uploads/',
-            'backup_assets' => 'storage/backup/assets/',
-            'block' => 'storage/uploads/block/',
-        ];
-    }
-
-    public static function oldPaths()
-    {
-        return [
-            'news' => 'statics/images/news/',
-            'block' => 'statics/images/block/images/',
-        ];
-    }
-
     public static function createImages($image, $size = [], $path = '', $name = '', $ext = '', $scope = 1, $type = 'variant')
     {
         foreach ($size as $key => $item) {
@@ -162,12 +126,5 @@ class Helper
             return true;
         }
         return false;
-    }
-
-    public static function bn_number($number)
-    {
-        $en = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-        $bn = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-        return str_replace($en, $bn, $number);
     }
 }

@@ -26,5 +26,13 @@ class OrianHelperServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->loadHelpers();
+    }
+
+    protected function loadHelpers()
+    {
+        foreach (glob(__DIR__ . '../Helper/Functions.php') as $filename) {
+            require_once $filename;
+        }
     }
 }
