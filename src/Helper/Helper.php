@@ -26,17 +26,6 @@ class Helper
         return $files;
     }
 
-    public static function getPageDefault($base, $request)
-    {
-        return [
-            'base' => $base,
-            'item' => null,
-            'items' => [],
-            'lang' => null,
-            'type' => (isset($request->uuid)) ? 'edit' : 'page'
-        ];
-    }
-
     public static function createDir($dir)
     {
         if (!is_dir(public_path($dir))) {
@@ -118,13 +107,5 @@ class Helper
     public static function isValidUtf8($text): bool
     {
         return mb_detect_encoding($text, 'UTF-8', true) !== false;
-    }
-
-    public static function active($url = '')
-    {
-        if (request()->is($url) || request()->is($url . '/*')) {
-            return true;
-        }
-        return false;
     }
 }

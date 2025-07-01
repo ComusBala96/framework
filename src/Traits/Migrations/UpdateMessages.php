@@ -5,6 +5,7 @@ namespace Orian\Framework\Traits\Migrations;
 use App\Models\Message;
 use Webpatser\Uuid\Uuid;
 use App\Models\Old\OldMessage;
+use Orian\Framework\Helper\Helper;
 
 trait UpdateMessages
 {
@@ -16,7 +17,7 @@ trait UpdateMessages
             // if (in_array($item->id, [12, 107])) {
             //     continue;
             // }
-            if (!isValidUtf8($item->message)) {
+            if (!Helper::isValidUtf8($item->message)) {
                 continue;
             }
             if (preg_match('/[\p{Cyrillic}]/u', $item->message)) {

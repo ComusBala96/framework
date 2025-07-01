@@ -7,6 +7,7 @@ use App\Models\User;
 use Webpatser\Uuid\Uuid;
 use App\Models\Old\OldUser;
 use Illuminate\Support\Facades\File;
+use Orian\Framework\Helper\Helper;
 
 trait UpdateUsers
 {
@@ -14,7 +15,7 @@ trait UpdateUsers
     {
         $roleMap = Role::pluck('id', 'name')->mapWithKeys(fn ($id, $name) => [strtolower($name) => $id])->toArray();
         $path = paths()['user'];
-        createDir($path);
+        Helper::createDir($path);
         File::cleanDirectory($path);
         $now = now();
         $users = [];
@@ -27,7 +28,7 @@ trait UpdateUsers
                     if (file_exists($oldPath)) {
                         $ext = pathinfo($oldPath, PATHINFO_EXTENSION);
                         $name = (string) Uuid::generate(4);
-                        createImages($oldPath, [['width' => 240, 'height' => 240]], $path, $name, $ext, 100, 'noVariant');
+                        Helper::createImages($oldPath, [['width' => 240, 'height' => 240]], $path, $name, $ext, 100, 'noVariant');
                         $profile = $name . '.' . $ext;
                     }
                 }

@@ -41,3 +41,21 @@ function oldPaths()
         'block' => 'statics/images/block/images/',
     ];
 }
+function getPageDefault($base, $request)
+{
+    return [
+        'base' => $base,
+        'item' => null,
+        'items' => [],
+        'lang' => null,
+        'type' => (isset($request->uuid)) ? 'edit' : 'page'
+    ];
+}
+
+function active($url = '')
+{
+    if (request()->is($url) || request()->is($url . '/*')) {
+        return true;
+    }
+    return false;
+}

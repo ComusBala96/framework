@@ -5,6 +5,7 @@ namespace Orian\Framework\Traits\DomDocument;
 use DOMDocument;
 use Webpatser\Uuid\Uuid;
 use Illuminate\Support\Str;
+use Orian\Framework\Helper\Helper;
 
 trait MakeDocument
 {
@@ -17,7 +18,7 @@ trait MakeDocument
         libxml_clear_errors();
         $images = $dom->getElementsByTagName('img');
         $path = paths()['jodit'];
-        createDir($path);
+        Helper::createDir($path);
         $ext = 'jpg';
         foreach ($images as $img) {
             $src = $img->getAttribute('src');
@@ -47,7 +48,7 @@ trait MakeDocument
         libxml_clear_errors();
         $images = $dom->getElementsByTagName('img');
         $path = paths()['jodit'];
-        createDir($path);
+        Helper::createDir($path);
         $ext = 'jpg';
         foreach ($images as $img) {
             $src = $img->getAttribute('src');
