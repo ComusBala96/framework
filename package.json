@@ -1,8 +1,8 @@
 {
-    "name": "@orian/laravel",
+    "name": "@orian/framework",
     "description": "All packages scripts are defined here.",
     "version": "1.0.0",
-    "main": "laravel.js",
+    "main": "framework.js",
     "keywords": [],
     "author": {
         "name": "OrianSoft",
