@@ -1,5 +1,5 @@
 {
-    "name": "@orian/framework",
+    "name": "@oriansoft/framework",
     "description": "All packages scripts are defined here.",
     "version": "1.0.0",
     "main": "framework.js",

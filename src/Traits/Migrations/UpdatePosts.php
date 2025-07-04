@@ -6,8 +6,9 @@ use App\Models\Menu;
 use Webpatser\Uuid\Uuid;
 use App\Models\Old\OldPost;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use Orian\Framework\Helper\Helper;
+use Illuminate\Support\Facades\File;
+use Orian\Framework\Constant\Constant;
 
 trait UpdatePosts
 {
@@ -15,7 +16,7 @@ trait UpdatePosts
     {
         DB::table('news')->truncate();
         $menus = Menu::where('lang', 'en')->pluck('id', 'name')->toArray();
-        $postImageSizes = config('config.post_image_size', defaultPostImageSize());
+        $postImageSizes = config('config.post_image_size', Constant::defaultPostImageSize());
         $oldImagePath = public_path(oldPaths()['news']);
         $newsImagePath = paths()['news_main'];
         Helper::createDir($newsImagePath);
