@@ -52,8 +52,8 @@ class Constant
     {
         return[
             ['width' => 630, 'height' => 120],
-            ['width' => 768, 'height' => 146],
-            ['width' => 1260, 'height' => 240]
+            ['width' => 768, 'height' => 144],
+            ['width' => 1400, 'height' => 240]
         ];
     }
 

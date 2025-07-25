@@ -59,3 +59,29 @@ function active($url = '')
     }
     return false;
 }
+function category_trans($category)
+{
+    switch (strtolower($category)) {
+        case 'breaking':
+            return trans('common.category.breaking');
+            break;
+        case 'latest':
+            return trans('common.category.latest');
+            break;
+        case 'headline':
+            return trans('common.category.headline');
+            break;
+        case 'feature':
+            return trans('common.category.feature');
+            break;
+        case 'trending':
+            return trans('common.category.trending');
+            break;
+        case 'popular':
+            return trans('common.category.popular');
+            break;
+        default:
+            return $category;
+            break;
+    }
+}
