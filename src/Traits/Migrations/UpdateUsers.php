@@ -24,7 +24,7 @@ trait UpdateUsers
             if (!empty($item->username) && $item->email != 'comusbala96@gmail.com') {
                 $profile = null;
                 if (!empty($item->avatar)) {
-                    $oldPath = public_path(oldPaths()['news'] . $item->avatar);
+                    $oldPath = public_path(oldPaths()['old'] . $item->avatar);
                     if (file_exists($oldPath)) {
                         $ext = pathinfo($oldPath, PATHINFO_EXTENSION);
                         $name = (string) Uuid::generate(4);

@@ -1,12 +1,13 @@
 {
     "name": "oriansoft/framework",
     "description": "A framework package for OrianSoft and OrianSoft Clients.",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "homepage": "https://github.com/ComusBala96/framework",
     "keywords": [
         "OrianSoft",
         "laravel",
-        "Orian"
+        "Orian",
+        "oriansoft/framework"
     ],
     "license": "MIT",
     "authors": [

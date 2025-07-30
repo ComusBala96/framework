@@ -17,7 +17,7 @@ trait UpdatePosts
         DB::table('news')->truncate();
         $menus = Menu::where('lang', 'en')->pluck('id', 'name')->toArray();
         $postImageSizes = config('config.post_image_size', Constant::defaultPostImageSize());
-        $oldImagePath = public_path(oldPaths()['news']);
+        $oldImagePath = public_path(oldPaths()['old']);
         $newsImagePath = paths()['news_main'];
         Helper::createDir($newsImagePath);
         File::cleanDirectory($newsImagePath);

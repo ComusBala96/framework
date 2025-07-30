@@ -37,7 +37,7 @@ function paths()
 function oldPaths()
 {
     return [
-        'news' => 'statics/images/news/',
+        'old' => 'statics/images/old/',
         'block' => 'statics/images/block/images/',
     ];
 }
@@ -84,4 +84,9 @@ function category_trans($category)
             return $category;
             break;
     }
+}
+
+function get_base64_image($url)
+{
+    return 'data:image/png;base64,' . base64_encode(file_get_contents($url));
 }
