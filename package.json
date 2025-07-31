@@ -1,12 +1,12 @@
 {
-    "name": "@oriansoft/framework",
+    "name": "@orians/framework",
     "description": "All packages scripts are defined here.",
     "version": "1.0.0",
     "main": "framework.js",
     "keywords": [],
     "author": {
         "name": "OrianSoft",
-        "email": "info@oriansoft.com"
+        "email": "info@orians.com"
     },
     "license": "MIT",
     "dependencies": {}
