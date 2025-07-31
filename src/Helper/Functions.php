@@ -37,7 +37,6 @@ function paths()
 function oldPaths()
 {
     return [
-        'old' => 'statics/images/old/',
         'block' => 'statics/images/block/images/',
     ];
 }
