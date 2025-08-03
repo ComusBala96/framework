@@ -1,7 +1,7 @@
 {
     "name": "orians/framework",
     "description": "A framework package for OrianSoft and OrianSoft Clients.",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "homepage": "https://github.com/ComusBala96/framework",
     "keywords": [
         "OrianSoft",
@@ -34,6 +34,17 @@
             "Tests\\": "tests/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Orian\\Framework\\Providers\\OrianHelperServiceProvider"
+            ],
+            "aliases": {
+                "Helper": "Orian\\Framework\\Facades\\HelperFacade",
+                "Constant": "Orian\\Framework\\Facades\\ConstantFacade"
+            }
+        }
+    },
     "scripts": {
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
@@ -44,17 +55,6 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "phpstan/extension-installer": true
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Orian\\Framework\\Providers\\OrianHelperServiceProvider"
-            ],
-            "aliases": {
-                "Helper": "Orian\\Framework\\Facades\\HelperFacade",
-                "Constant": "Orian\\Framework\\Facades\\ConstantFacade"
-            }
         }
     },
     "minimum-stability": "dev",
