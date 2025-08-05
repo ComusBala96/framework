@@ -98,6 +98,16 @@ function category_trans($category)
     }
 }
 
+function is_menu($title)
+{
+    $is_menu = false;
+    $menu = App\Models\Menu::where('title', $title)->first();
+    if (!empty($menu)) {
+        $is_menu = true;
+    }
+    return $is_menu;
+}
+
 function get_base64_image($url)
 {
     return 'data:image/png;base64,' . base64_encode(file_get_contents($url));
