@@ -153,6 +153,24 @@ trait SeoTool
         JsonLd::setDescription($item?->description ?? $item?->title);
     }
 
+    public function generatePollMeta($item)
+    {
+        SEOMeta::setTitle($item?->question . ' - ' . config('meta.app_name'));
+        SEOMeta::setCanonical(url()->current());
+        OpenGraph::setTitle($item?->question . ' - ' . config('meta.app_name'));
+        OpenGraph::setUrl(url()->current());
+        OpenGraph::addProperty('type', 'Poll');
+        OpenGraph::addImage(url(paths()['poll_image'] . $item->image . $item->size_xl . $item->ext));
+        TwitterCard::setTitle($item?->question . ' - ' . config('meta.app_name'));
+        TwitterCard::setSite(config('meta.twitter', '@lensasia.net'));
+        TwitterCard::setUrl(url()->current());
+        TwitterCard::addImage(url(paths()['poll_image'] . $item->image . $item->size_xl . $item->ext));
+        TwitterCard::setType('Poll');
+        JsonLd::setTitle($item?->question . ' - ' . config('meta.app_name'));
+        JsonLd::setSite(url()->current());
+        JsonLd::addImage(url(paths()['poll_image'] . $item->image . $item->size_xl . $item->ext));
+    }
+
     public function generateVideoMeta($item)
     {
         SEOMeta::setTitle($item?->title . ' - ' . config('meta.app_name'));
