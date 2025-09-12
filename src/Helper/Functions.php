@@ -108,6 +108,9 @@ function category_trans($category)
         case 'popular':
             return trans('common.category.popular');
             break;
+        case 'opinion':
+            return trans('common.category.opinion');
+            break;
         default:
             return $category;
             break;
