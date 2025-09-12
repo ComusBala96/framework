@@ -67,24 +67,26 @@ trait SeoTool
         OpenGraph::setTitle($item?->title . ' - ' . config('meta.app_name'));
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'Category');
-        foreach ($item->news as $key => $news) {
-            OpenGraph::addImage($news->image ? url(paths()['news_main'] . $news->image . $news->size_xl . $news->ext) : $news?->image_url);
-        }
 
         TwitterCard::setTitle($item?->title . ' - ' . config('meta.app_name'));
         TwitterCard::setSite(config('meta.twitter', '@lensasia.net'));
         TwitterCard::setUrl(url()->current());
-        foreach ($item->news as $key => $news) {
-            TwitterCard::addImage($news->image ? url(paths()['news_main'] . $news->image . $news->size_xl . $news->ext) : $news?->image_url);
-        }
         TwitterCard::setType('Category');
 
         JsonLd::setTitle($item?->title . ' - ' . config('meta.app_name'));
         JsonLd::setSite(url()->current());
-        foreach ($item->news as $key => $news) {
-            JsonLd::addImage($news->image ? url(paths()['news_main'] . $news->image . $news->size_xl . $news->ext) : $news?->image_url);
-        }
         JsonLd::setDescription($item?->description ?? $item?->title);
+
+        foreach ($item->news as $key => $news) {
+            if (!empty($news?->meta_image)) {
+                $image = url(paths()['meta_image'] . $news->meta_image . $news->size_xl . $news->ext);
+            } else {
+                $image = url(paths()['news_main'] . $news->image . $news->size_xl . $news->ext);
+            }
+            OpenGraph::addImage($image ? $image : $news?->image_url);
+            TwitterCard::addImage($image ? $image : $news?->image_url);
+            JsonLd::addImage($image ? $image : $news?->image_url);
+        }
     }
 
     public function generateGalleryMeta($item)
@@ -99,25 +101,23 @@ trait SeoTool
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'Gallery');
         OpenGraph::addImage(url(paths()['gallery_main'] . $item->image . $item->size_xl . $item->ext));
-        foreach ($item->images as $key => $image) {
-            OpenGraph::addImage(url(paths()['gallery_images'] . $image->name . $image->size_xl . $image->ext));
-        }
+
         TwitterCard::setTitle($item?->title . ' - ' . config('meta.app_name'));
         TwitterCard::setSite(config('meta.twitter', '@lensasia.net'));
         TwitterCard::setUrl(url()->current());
         TwitterCard::addImage(url(paths()['gallery_main'] . $item->image . $item->size_xl . $item->ext));
-        foreach ($item->images as $key => $image) {
-            TwitterCard::addImage(url(paths()['gallery_images'] . $image->name . $image->size_xl . $image->ext));
-        }
         TwitterCard::setType('Gallery');
 
         JsonLd::setTitle($item?->title . ' - ' . config('meta.app_name'));
         JsonLd::setSite(url()->current());
         JsonLd::addImage(url(paths()['gallery_main'] . $item->image . $item->size_xl . $item->ext));
+        JsonLd::setDescription($item?->description ?? $item?->title);
+
         foreach ($item->images as $key => $image) {
+            OpenGraph::addImage(url(paths()['gallery_images'] . $image->name . $image->size_xl . $image->ext));
+            TwitterCard::addImage(url(paths()['gallery_images'] . $image->name . $image->size_xl . $image->ext));
             JsonLd::addImage(url(paths()['gallery_images'] . $image->name . $image->size_xl . $image->ext));
         }
-        JsonLd::setDescription($item?->description ?? $item?->title);
     }
 
     public function generateNewsMeta($item)
@@ -127,45 +127,45 @@ trait SeoTool
         SEOMeta::setKeywords($item?->keywords ?? '');
         SEOMeta::setCanonical(url()->current());
 
-        OpenGraph::setDescription($item?->description ?? $item?->title);
         OpenGraph::setTitle($item?->title . ' - ' . config('meta.app_name'));
+        OpenGraph::setDescription($item?->description ?? $item?->title);
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'News');
-        OpenGraph::addImage($item->image ? url(paths()['news_main'] . $item->image . $item->size_xl . $item->ext) : $item?->image_url);
-        foreach ($item->images as $key => $image) {
-            OpenGraph::addImage(url(paths()['news_images'] . $image->name . $image->size_xl . $image->ext));
+        if (!empty($item?->meta_image)) {
+            $image = url(paths()['meta_image'] . $item->meta_image . $item->size_xl . $item->ext);
+        } else {
+            $image = url(paths()['news_main'] . $item->image . $item->size_xl . $item->ext);
         }
+        OpenGraph::addImage($image ? $image : $item?->image_url);
+
         TwitterCard::setTitle($item?->title . ' - ' . config('meta.app_name'));
         TwitterCard::setSite(config('meta.twitter', '@lensasia.net'));
         TwitterCard::setUrl(url()->current());
-        TwitterCard::addImage($item->image ? url(paths()['news_main'] . $item->image . $item->size_xl . $item->ext) : $item?->image_url);
-        foreach ($item->images as $key => $image) {
-            TwitterCard::addImage(url(paths()['news_images'] . $image->name . $image->size_xl . $image->ext));
-        }
         TwitterCard::setType('News');
+        TwitterCard::addImage($image ? $image : $item?->image_url);
 
         JsonLd::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        JsonLd::setSite(url()->current());
-        JsonLd::addImage($item->image ? url(paths()['news_main'] . $item->image . $item->size_xl . $item->ext) : $item?->image_url);
-        foreach ($item->images as $key => $image) {
-            JsonLd::addImage(url(paths()['news_images'] . $image->name . $image->size_xl . $image->ext));
-        }
         JsonLd::setDescription($item?->description ?? $item?->title);
+        JsonLd::setSite(url()->current());
+        JsonLd::addImage($image ? $image : $item?->image_url);
     }
 
     public function generatePollMeta($item)
     {
         SEOMeta::setTitle($item?->question . ' - ' . config('meta.app_name'));
         SEOMeta::setCanonical(url()->current());
+
         OpenGraph::setTitle($item?->question . ' - ' . config('meta.app_name'));
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'Poll');
         OpenGraph::addImage(url(paths()['poll_image'] . $item->image . $item->size_xl . $item->ext));
+
         TwitterCard::setTitle($item?->question . ' - ' . config('meta.app_name'));
         TwitterCard::setSite(config('meta.twitter', '@lensasia.net'));
         TwitterCard::setUrl(url()->current());
-        TwitterCard::addImage(url(paths()['poll_image'] . $item->image . $item->size_xl . $item->ext));
         TwitterCard::setType('Poll');
+        TwitterCard::addImage(url(paths()['poll_image'] . $item->image . $item->size_xl . $item->ext));
+
         JsonLd::setTitle($item?->question . ' - ' . config('meta.app_name'));
         JsonLd::setSite(url()->current());
         JsonLd::addImage(url(paths()['poll_image'] . $item->image . $item->size_xl . $item->ext));
