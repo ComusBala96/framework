@@ -11,12 +11,12 @@ trait SeoTool
 {
     public function generateHomeMetaData($item)
     {
-        SEOMeta::setDescription($item?->description);
+        SEOMeta::setDescription(strip_tags($item?->description));
         SEOMeta::setKeywords($item?->keywords ?? '');
         SEOMeta::setCanonical(url()->current());
 
         OpenGraph::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        OpenGraph::setDescription($item?->description);
+        OpenGraph::setDescription(strip_tags($item?->description));
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'Homepage');
         OpenGraph::addImage(url(config('meta.logo')));
@@ -28,19 +28,19 @@ trait SeoTool
         TwitterCard::setType('Homepage');
 
         JsonLd::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        JsonLd::setDescription($item?->description);
+        JsonLd::setDescription(strip_tags($item?->description));
         JsonLd::setSite(url()->current());
         JsonLd::addImage(url(config('meta.logo')));
     }
 
     public function generatePageMetaData($item)
     {
-        SEOMeta::setDescription($item?->description);
+        SEOMeta::setDescription(strip_tags($item?->description));
         SEOMeta::setKeywords($item?->keywords ?? '');
         SEOMeta::setCanonical(url()->current());
 
         OpenGraph::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        OpenGraph::setDescription($item?->description);
+        OpenGraph::setDescription(strip_tags($item?->description));
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'Pages');
         OpenGraph::addImage(url(config('meta.logo')));
@@ -52,19 +52,19 @@ trait SeoTool
         TwitterCard::setType('Pages');
 
         JsonLd::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        JsonLd::setDescription($item?->description);
+        JsonLd::setDescription(strip_tags($item?->description));
         JsonLd::setSite(url()->current());
         JsonLd::addImage(url(config('meta.logo')));
     }
 
     public function generateCategoryMetaData($item)
     {
-        SEOMeta::setDescription($item?->description);
+        SEOMeta::setDescription(strip_tags($item?->description));
         SEOMeta::setKeywords($item?->keywords ?? '');
         SEOMeta::setCanonical(url()->current());
 
         OpenGraph::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        OpenGraph::setDescription($item?->description);
+        OpenGraph::setDescription(strip_tags($item?->description));
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'Category');
 
@@ -74,7 +74,7 @@ trait SeoTool
         TwitterCard::setType('Category');
 
         JsonLd::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        JsonLd::setDescription($item?->description);
+        JsonLd::setDescription(strip_tags($item?->description));
         JsonLd::setSite(url()->current());
 
         foreach ($item->news as $key => $news) {
@@ -94,12 +94,12 @@ trait SeoTool
         $image = url(paths()['gallery_main'] . $item->image . $item->size_xl . $item->ext);
 
         SEOMeta::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        SEOMeta::setDescription($item?->description);
+        SEOMeta::setDescription(strip_tags($item?->description));
         SEOMeta::setKeywords($item?->keywords ?? '');
         SEOMeta::setCanonical(url()->current());
 
         OpenGraph::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        OpenGraph::setDescription($item?->description);
+        OpenGraph::setDescription(strip_tags($item?->description));
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'Gallery');
         OpenGraph::addImage($image);
@@ -111,7 +111,7 @@ trait SeoTool
         TwitterCard::setType('Gallery');
 
         JsonLd::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        JsonLd::setDescription($item?->description);
+        JsonLd::setDescription(strip_tags($item?->description));
         JsonLd::setSite(url()->current());
         JsonLd::addImage($image);
 
@@ -126,12 +126,12 @@ trait SeoTool
     public function generateNewsMeta($item)
     {
         SEOMeta::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        SEOMeta::setDescription($item?->description);
+        SEOMeta::setDescription(strip_tags($item?->description));
         SEOMeta::setKeywords($item?->keywords ?? '');
         SEOMeta::setCanonical(url()->current());
 
         OpenGraph::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        OpenGraph::setDescription($item?->description);
+        OpenGraph::setDescription(strip_tags($item?->description));
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'News');
         if (empty($item?->meta_image)) {
@@ -148,7 +148,7 @@ trait SeoTool
         TwitterCard::addImage($image ? $image : $item?->image_url);
 
         JsonLd::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        JsonLd::setDescription($item?->description);
+        JsonLd::setDescription(strip_tags($item?->description));
         JsonLd::setSite(url()->current());
         JsonLd::addImage($image ? $image : $item?->image_url);
     }
@@ -179,12 +179,12 @@ trait SeoTool
     public function generateVideoMeta($item)
     {
         SEOMeta::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        SEOMeta::setDescription($item?->description);
+        SEOMeta::setDescription(strip_tags($item?->description));
         SEOMeta::setKeywords($item?->keywords ?? '');
         SEOMeta::setCanonical(url()->current());
 
         OpenGraph::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        OpenGraph::setDescription($item?->description);
+        OpenGraph::setDescription(strip_tags($item?->description));
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'Video');
         OpenGraph::addImage(url(config('meta.logo')));
@@ -197,7 +197,7 @@ trait SeoTool
         TwitterCard::setType('Video');
 
         JsonLd::setTitle($item?->title . ' - ' . config('meta.app_name'));
-        JsonLd::setDescription($item?->description);
+        JsonLd::setDescription(strip_tags($item?->description));
         JsonLd::setSite(url()->current());
         JsonLd::addImage(url(config('meta.logo')));
     }
