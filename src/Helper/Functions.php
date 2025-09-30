@@ -133,11 +133,11 @@ function get_base64_image($url)
 }
 function getFiles(string $directory, string $ext = ''): array
 {
-    if (! File::exists($directory)) {
+    if (! Illuminate\Support\Facades\File::exists($directory)) {
         return [];
     }
 
-    $files = File::allFiles($directory);
+    $files = Illuminate\Support\Facades\File::allFiles($directory);
 
     return collect($files)
         ->map(function ($file) {
