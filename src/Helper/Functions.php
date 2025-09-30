@@ -131,13 +131,14 @@ function get_base64_image($url)
 {
     return 'data:image/png;base64,' . base64_encode(file_get_contents($url));
 }
+
 function getFiles(string $directory, string $ext = ''): array
 {
     if (! Illuminate\Support\Facades\File::exists($directory)) {
         return [];
     }
 
-    $files = Illuminate\Support\Facades\File::allFiles($directory);
+    $files = Illuminate\Support\Facades\File::files($directory);
 
     return collect($files)
         ->map(function ($file) {
