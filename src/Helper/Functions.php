@@ -131,3 +131,25 @@ function get_base64_image($url)
 {
     return 'data:image/png;base64,' . base64_encode(file_get_contents($url));
 }
+function getFiles(string $directory, string $ext = ''): array
+{
+    if (! File::exists($directory)) {
+        return [];
+    }
+
+    $files = File::allFiles($directory);
+
+    return collect($files)
+        ->map(function ($file) {
+            return str_replace(
+                '\\',
+                '/',
+                str_replace(base_path(), '', $file->getPathname())
+            );
+        })
+        ->filter(function ($file) use ($ext) {
+            return $ext === '' || str_ends_with($file, $ext);
+        })
+        ->map(fn ($file) => ltrim($file, '/'))
+        ->toArray();
+}
