@@ -1,7 +1,7 @@
 {
     "name": "orians/framework",
     "description": "A framework package for OrianSoft and OrianSoft Clients.",
-    "version": "1.1.6",
+    "version": "1.1.7",
     "homepage": "https://github.com/ComusBala96/framework",
     "keywords": [
         "OrianSoft",
@@ -40,8 +40,7 @@
                 "Orian\\Framework\\Providers\\OrianHelperServiceProvider"
             ],
             "aliases": {
-                "Helper": "Orian\\Framework\\Facades\\HelperFacade",
-                "Constant": "Orian\\Framework\\Facades\\ConstantFacade"
+                "Helper": "Orian\\Framework\\Facades\\HelperFacade"
             }
         }
     },
