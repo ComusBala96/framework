@@ -21,17 +21,14 @@ function trans_date($date)
 }
 function trans_date_time($date)
 {
-    if (app()->getLocale() == 'bn') {
-        $carbon = \Carbon\Carbon::parse($date)->translatedFormat('j F, Y A h:i ');
-    } else {
-        $carbon = \Carbon\Carbon::parse($date)->translatedFormat('j F, Y h:i A');
-    }
-    if (app()->getLocale() == 'bn') {
+    if (app()->getLocale() === 'bn') {
+        $carbon = \Carbon\Carbon::parse($date)->translatedFormat('j F, Y A h:i');
         $en = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
         $bn = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
         return  str_replace($en, $bn, $carbon);
+    } else {
+        return \Carbon\Carbon::parse($date)->translatedFormat('j F, Y h:i A');
     }
-    return $carbon;
 }
 function paths()
 {
@@ -151,6 +148,6 @@ function getFiles(string $directory, string $ext = ''): array
         ->filter(function ($file) use ($ext) {
             return $ext === '' || str_ends_with($file, $ext);
         })
-        ->map(fn ($file) => ltrim($file, '/'))
+        ->map(fn($file) => ltrim($file, '/'))
         ->toArray();
 }
