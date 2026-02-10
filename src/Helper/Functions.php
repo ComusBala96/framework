@@ -22,13 +22,27 @@ function trans_date($date)
 function trans_date_time($date)
 {
     if (app()->getLocale() === 'bn') {
-        $carbon = \Carbon\Carbon::parse($date)->translatedFormat('j F, Y A h:i');
+        $carbon = \Carbon\Carbon::parse($date);
+        if ($carbon->hour < 12) {
+            $meridiem = 'সকাল';
+        } elseif ($carbon->hour < 16) {
+            $meridiem = 'দুপুর';
+        } elseif ($carbon->hour < 18) {
+            $meridiem = 'বিকাল';
+        } elseif ($carbon->hour < 20) {
+            $meridiem = 'সন্ধ্যা';
+        } else {
+            $meridiem = 'রাত্রি';
+        }
+        $date = $carbon->translatedFormat('j F, Y ');
+        $time = $carbon->translatedFormat(' h:i');
+        $formatted = $date . $meridiem . $time;
         $en = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
         $bn = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
-        return  str_replace($en, $bn, $carbon);
-    } else {
-        return \Carbon\Carbon::parse($date)->translatedFormat('j F, Y h:i A');
+        return str_replace($en, $bn, $formatted);
     }
+
+    return \Carbon\Carbon::parse($date)->translatedFormat('j F, Y h:i A');
 }
 function paths()
 {
