@@ -24,20 +24,20 @@ trait SeoTool
         OpenGraph::setDescription($description ?? $demoDescription);
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'website');
-        OpenGraph::addImage(url(config('meta.logo')));
+        OpenGraph::addImage(url(config('meta.image')));
 
         TwitterCard::setTitle(config('meta.app_name') . ' | ' . $item?->title);
         TwitterCard::setDescription($description ?? $demoDescription);
         TwitterCard::setSite(config('meta.twitter', '@lensasia.net'));
         TwitterCard::setUrl(url()->current());
         TwitterCard::setType('summary_large_image');
-        TwitterCard::setImage(url(config('meta.logo')));
+        TwitterCard::setImage(url(config('meta.image')));
 
         JsonLd::setType('website');
         JsonLd::setTitle(config('meta.app_name') . ' | ' . $item?->title);
         JsonLd::setDescription($description ?? $demoDescription);
         JsonLd::setSite(url()->current());
-        JsonLd::addImage(url(config('meta.logo')));
+        JsonLd::addImage(url(config('meta.image')));
         JsonLd::addValue('isAccessibleForFree', true);
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
     }
@@ -117,7 +117,7 @@ trait SeoTool
         JsonLd::addValue('author', ['@type' => 'Organization', 'name'  => config('meta.app_name'), "url"   => url('/'),]);
         JsonLd::addValue('isAccessibleForFree', true);
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
-        JsonLd::addValue('publisher', ['@type' => 'Organization', 'name'  => config('meta.app_name'), 'logo'  => ['@type'  => 'ImageObject', 'url'    => url(config('meta.logo')), 'width'  => 600, 'height' => 60,],]);
+        JsonLd::addValue('publisher', ['@type' => 'Organization', 'name'  => config('meta.app_name'), 'logo'  => ['@type'  => 'ImageObject', 'url'    => url(config('meta.image')), 'width'  => 600, 'height' => 60,],]);
     }
     public function generateSearchMetaData()
     {
@@ -133,13 +133,13 @@ trait SeoTool
         OpenGraph::setDescription($demoDescription);
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'website');
-        OpenGraph::addImage(url(config('meta.logo')));
+        OpenGraph::addImage(url(config('meta.image')));
 
         TwitterCard::setTitle($title);
         TwitterCard::setDescription($demoDescription);
         TwitterCard::setSite(config('meta.twitter', '@lensasiabangla'));
         TwitterCard::setUrl(url()->current());
-        TwitterCard::setImage(url(config('meta.logo')));
+        TwitterCard::setImage(url(config('meta.image')));
         TwitterCard::setType('summary');
 
         JsonLd::setType('SearchResultsPage');
@@ -168,13 +168,13 @@ trait SeoTool
         OpenGraph::setDescription($description);
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'website');
-        OpenGraph::addImage(url(config('meta.logo')));
+        OpenGraph::addImage(url(config('meta.image')));
 
         TwitterCard::setTitle($title);
         TwitterCard::setDescription($description);
         TwitterCard::setSite(config('meta.twitter', '@lensasiabangla'));
         TwitterCard::setUrl(url()->current());
-        TwitterCard::setImage(url(config('meta.logo')));
+        TwitterCard::setImage(url(config('meta.image')));
         TwitterCard::setType('summary');
 
         JsonLd::setType('CollectionPage');
@@ -203,13 +203,13 @@ trait SeoTool
         OpenGraph::setDescription($description);
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'website');
-        OpenGraph::addImage(url(config('meta.logo')));
+        OpenGraph::addImage(url(config('meta.image')));
 
         TwitterCard::setTitle($title);
         TwitterCard::setDescription($description);
         TwitterCard::setSite(config('meta.twitter', '@lensasiabangla'));
         TwitterCard::setUrl(url()->current());
-        TwitterCard::setImage(url(config('meta.logo')));
+        TwitterCard::setImage(url(config('meta.image')));
         TwitterCard::setType('summary');
 
         JsonLd::setType('ContactPage');
@@ -218,7 +218,7 @@ trait SeoTool
         JsonLd::setUrl(url()->current());
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
-        JsonLd::addValue('about', ['@type' => 'Organization', 'name' => $appName, 'url' => url('/'), 'logo' => url(config('meta.logo')),]);
+        JsonLd::addValue('about', ['@type' => 'Organization', 'name' => $appName, 'url' => url('/'), 'logo' => url(config('meta.image')),]);
     }
 
     public function generatePageMetaData($item)
@@ -238,23 +238,23 @@ trait SeoTool
         OpenGraph::setDescription($description);
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'article');
-        OpenGraph::addImage(url(config('meta.logo')));
+        OpenGraph::addImage(url(config('meta.image')));
 
         TwitterCard::setTitle($title);
         TwitterCard::setDescription($description);
         TwitterCard::setSite(config('meta.twitter', '@lensasiabangla'));
         TwitterCard::setUrl(url()->current());
-        TwitterCard::setImage(url(config('meta.logo')));
+        TwitterCard::setImage(url(config('meta.image')));
         TwitterCard::setType('summary_large_image');
 
         JsonLd::setType('WebPage');
         JsonLd::setTitle($title);
         JsonLd::setDescription($description);
         JsonLd::setUrl(url()->current());
-        JsonLd::addImage(url(config('meta.logo')));
+        JsonLd::addImage(url(config('meta.image')));
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
-        JsonLd::addValue('about', ['@type' => 'Organization', 'name' => $appName, 'url' => url('/'), 'logo' => url(config('meta.logo')),]);
+        JsonLd::addValue('about', ['@type' => 'Organization', 'name' => $appName, 'url' => url('/'), 'logo' => url(config('meta.image')),]);
     }
     public function generatePollsMeta()
     {
@@ -274,12 +274,12 @@ trait SeoTool
         OpenGraph::setDescription($description);
         OpenGraph::setUrl(url()->current());
         OpenGraph::addProperty('type', 'website');
-        OpenGraph::addImage(url(config('meta.logo')));
+        OpenGraph::addImage(url(config('meta.image')));
 
         TwitterCard::setTitle($title);
         TwitterCard::setDescription($description);
         TwitterCard::setSite(config('meta.twitter', '@lensasiabangla'));
-        TwitterCard::setImage(url(config('meta.logo')));
+        TwitterCard::setImage(url(config('meta.image')));
         TwitterCard::setType('summary_large_image');
 
         JsonLd::setType('CollectionPage');
@@ -347,7 +347,7 @@ trait SeoTool
             : 'সর্বশেষ ফটো ও মিডিয়া গ্যালারি দেখুন। আপনার প্রিয় ছবি উপভোগ করুন এবং শেয়ার করুন।';
 
         $url = url()->current();
-        $logo = url(config('meta.logo'));
+        $logo = url(config('meta.image'));
         $twitter = config('meta.twitter', '@lensasiabangla');
 
         SEOMeta::setDescription($description);
@@ -384,7 +384,7 @@ trait SeoTool
             : 'সর্বশেষ ফটো ও মিডিয়া গ্যালারি দেখুন। আপনার প্রিয় ছবি উপভোগ করুন এবং শেয়ার করুন।';
 
         $url = url()->current();
-        $logo = url(config('meta.logo'));
+        $logo = url(config('meta.image'));
         $twitter = config('meta.twitter', '@lensasiabangla');
 
         SEOMeta::setDescription($description);
@@ -470,7 +470,7 @@ trait SeoTool
             : 'সর্বশেষ ফটো ও মিডিয়া ভিডিও দেখুন। আপনার প্রিয় ভিডিওগুলি উপভোগ করুন এবং শেয়ার করুন।';
 
         $url = url()->current();
-        $logo = url(config('meta.logo'));
+        $logo = url(config('meta.image'));
         $twitter = config('meta.twitter', '@lensasiabangla');
 
         SEOMeta::setDescription($description);
@@ -507,7 +507,7 @@ trait SeoTool
             : 'সর্বশেষ ফটো ও মিডিয়া ভিডিও দেখুন। আপনার প্রিয় ভিডিওগুলি উপভোগ করুন এবং শেয়ার করুন।';
 
         $url = url()->current();
-        $logo = url(config('meta.logo'));
+        $logo = url(config('meta.image'));
         $twitter = config('meta.twitter', '@lensasiabangla');
 
         SEOMeta::setDescription($description);
