@@ -41,6 +41,7 @@ trait SeoTool
         JsonLd::addValue('isAccessibleForFree', true);
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
     }
+
     public function generateCategoryMetaData($item)
     {
         $locale = app()->getLocale();
@@ -80,6 +81,7 @@ trait SeoTool
             JsonLd::addImage($image ? $image : $news?->image_url);
         }
     }
+
     public function generateNewsMeta($item)
     {
         $description = Str::limit(strip_tags($item->description), 160);
@@ -113,17 +115,18 @@ trait SeoTool
         JsonLd::addImage($image);
         JsonLd::addValue('datePublished', optional($item->published_at ?: $item->created_at)?->toIso8601String());
         JsonLd::addValue('dateModified', optional($item->updated_at ?: $item->published_at ?: $item->created_at)?->toIso8601String());
-        JsonLd::addValue('mainEntityOfPage', ['@type' => 'WebPage', '@id'   => url()->current(),]);
-        JsonLd::addValue('author', ['@type' => 'Organization', 'name'  => config('meta.app_name'), "url"   => url('/'),]);
+        JsonLd::addValue('mainEntityOfPage', ['@type' => 'WebPage', '@id' => url()->current(), ]);
+        JsonLd::addValue('author', ['@type' => 'Organization', 'name' => config('meta.app_name'), 'url' => url('/'), ]);
         JsonLd::addValue('isAccessibleForFree', true);
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
-        JsonLd::addValue('publisher', ['@type' => 'Organization', 'name'  => config('meta.app_name'), 'logo'  => ['@type'  => 'ImageObject', 'url'    => url(config('meta.image')), 'width'  => 600, 'height' => 60,],]);
+        JsonLd::addValue('publisher', ['@type' => 'Organization', 'name' => config('meta.app_name'), 'logo' => ['@type' => 'ImageObject', 'url' => url(config('meta.image')), 'width' => 600, 'height' => 60, ], ]);
     }
+
     public function generateSearchMetaData()
     {
         $locale = app()->getLocale();
         $appName = config('meta.app_name');
-        $demoDescription = $locale == 'en' ? $appName . " latest news search." : $appName . " সর্বশেষ সংবাদ অনুসন্ধান করুন।";
+        $demoDescription = $locale == 'en' ? $appName . ' latest news search.' : $appName . ' সর্বশেষ সংবাদ অনুসন্ধান করুন।';
         $title = $locale == 'en' ? "Search | {$appName}" : "অনুসন্ধান | {$appName}";
         SEOMeta::setDescription($demoDescription);
         SEOMeta::setCanonical(url()->current());
@@ -149,6 +152,7 @@ trait SeoTool
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
     }
+
     public function generateArchiveMetaData()
     {
         $appName = config('meta.app_name');
@@ -184,6 +188,7 @@ trait SeoTool
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
     }
+
     public function generateContactMetaData()
     {
         $appName = config('meta.app_name');
@@ -218,7 +223,7 @@ trait SeoTool
         JsonLd::setUrl(url()->current());
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
-        JsonLd::addValue('about', ['@type' => 'Organization', 'name' => $appName, 'url' => url('/'), 'logo' => url(config('meta.image')),]);
+        JsonLd::addValue('about', ['@type' => 'Organization', 'name' => $appName, 'url' => url('/'), 'logo' => url(config('meta.image')), ]);
     }
 
     public function generatePageMetaData($item)
@@ -254,8 +259,9 @@ trait SeoTool
         JsonLd::addImage(url(config('meta.image')));
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
-        JsonLd::addValue('about', ['@type' => 'Organization', 'name' => $appName, 'url' => url('/'), 'logo' => url(config('meta.image')),]);
+        JsonLd::addValue('about', ['@type' => 'Organization', 'name' => $appName, 'url' => url('/'), 'logo' => url(config('meta.image')), ]);
     }
+
     public function generatePollsMeta()
     {
         $locale = app()->getLocale();
@@ -289,13 +295,14 @@ trait SeoTool
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
     }
+
     public function generatePollMeta($item)
     {
         $image = url(paths()['poll_image'] . $item->image . $item->size_xl . $item->ext);
         $locale = app()->getLocale();
         $appName = config('meta.app_name');
         $title = $item->question . ' | ' . $appName;
-        $description = $locale === 'en' ? "Share your opinion in this poll: " . $item->question : "এই জরিপে আপনার মতামত দিন: " . $item->question;
+        $description = $locale === 'en' ? 'Share your opinion in this poll: ' . $item->question : 'এই জরিপে আপনার মতামত দিন: ' . $item->question;
 
         SEOMeta::setDescription($description);
         SEOMeta::setCanonical(url()->current());
@@ -334,6 +341,7 @@ trait SeoTool
             JsonLd::addValue('suggestedAnswer', $answers);
         }
     }
+
     public function generateGalleriesMeta()
     {
         $locale = app()->getLocale();
@@ -373,6 +381,7 @@ trait SeoTool
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
     }
+
     public function generateGalleriesTagMeta($tag)
     {
         $locale = app()->getLocale();
@@ -410,6 +419,7 @@ trait SeoTool
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
     }
+
     public function generateGalleryMeta($item)
     {
         $mainImage = url(paths()['gallery_main'] . $item->image . $item->size_xl . $item->ext);
@@ -457,6 +467,7 @@ trait SeoTool
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
     }
+
     public function generateVideosMeta()
     {
         $locale = app()->getLocale();
@@ -496,6 +507,7 @@ trait SeoTool
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
     }
+
     public function generateVideosTagMeta($tag)
     {
         $locale = app()->getLocale();
@@ -533,6 +545,7 @@ trait SeoTool
         JsonLd::addValue('inLanguage', $locale . '-' . ($locale === 'en' ? 'US' : 'BD'));
         JsonLd::addValue('isAccessibleForFree', true);
     }
+
     public function generateVideoMeta($item)
     {
         $video = $item->url ? $item->url : url(paths()['video_main'] . $item->video);

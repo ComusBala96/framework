@@ -145,7 +145,7 @@ function get_base64_image($url)
 
 function getFiles(string $directory, string $ext = ''): array
 {
-    if (! Illuminate\Support\Facades\File::exists($directory)) {
+    if (!Illuminate\Support\Facades\File::exists($directory)) {
         return [];
     }
 
@@ -162,6 +162,6 @@ function getFiles(string $directory, string $ext = ''): array
         ->filter(function ($file) use ($ext) {
             return $ext === '' || str_ends_with($file, $ext);
         })
-        ->map(fn($file) => ltrim($file, '/'))
+        ->map(fn ($file) => ltrim($file, '/'))
         ->toArray();
 }

@@ -38,7 +38,7 @@ trait CheckExistsDependency
             if (count($rows) > 0) {
                 foreach ($rows as $row_keys => $value) {
                     if (in_array($value[$search[$key]], $targetIds)) {
-                        $errors[] = $exists[$key] . ' "' . $value[$denied[$key]] . '" already in use in ' . $in[$key] . ', can not be deleted ';
+                        $errors[] = $exists[$key] . ' "' . $denied[$key] . '" already in use in ' . $in[$key] . ', can not be deleted ';
                         break;
                     }
                 }
