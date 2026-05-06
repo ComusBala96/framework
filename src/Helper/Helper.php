@@ -33,23 +33,6 @@ class Helper
         }
     }
 
-    public static function metaImage()
-    {
-        return [
-            'favicon' => 'favicon.ico',
-            'logo' => 'logo.png',
-            'logo_dark' => 'logo-dark.png',
-            'auth' => 'statics/images/auth.jpg',
-            'loader' => 'statics/images/loader.gif',
-            'profile' => 'statics/images/profile.png',
-            'cover' => 'statics/images/cover.png',
-            'qr' => 'statics/images/qr.png',
-            'glob' => 'statics/images/glob.png',
-            '404' => 'statics/images/404.png',
-            'no_data' => 'statics/images/no_data.jpg',
-        ];
-    }
-
     public static function createImages($image, $size = [], $path = '', $name = '', $ext = '', $scope = 1, $type = 'variant')
     {
         foreach ($size as $key => $item) {

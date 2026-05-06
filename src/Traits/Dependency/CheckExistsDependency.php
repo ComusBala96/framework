@@ -13,7 +13,9 @@ trait CheckExistsDependency
             'query' => [
                 'where' => [
                     [[
-                        $values[1], '=', $request->{$values[2]}
+                        $values[1],
+                        '=',
+                        $request->{$values[2]}
                     ]]
                 ]
             ],
@@ -38,7 +40,7 @@ trait CheckExistsDependency
             if (count($rows) > 0) {
                 foreach ($rows as $row_keys => $value) {
                     if (in_array($value[$search[$key]], $targetIds)) {
-                        $errors[] = $exists[$key] . ' "' . $denied[$key] . '" already in use in ' . $in[$key] . ', can not be deleted ';
+                        $errors[] = trans('alerts.bigError', ['exists' => $exists[$key], 'denied' => $denied[$key], 'in' => $in[$key]]);
                         break;
                     }
                 }
@@ -64,7 +66,7 @@ trait CheckExistsDependency
             if (count($rows) > 0) {
                 foreach ($rows as $row_keys => $value) {
                     if (in_array($value[$search[$key]], $targetIds)) {
-                        $errors[] = $exists[$key] . ' "' . $value[$denied[$key]] . '" already in use in ' . $in[$key] . ', can not be deleted ';
+                        $errors[] = trans('alerts.bigError', ['exists' => $exists[$key], 'denied' => $denied[$key], 'in' => $in[$key]]);
                         break;
                     }
                 }

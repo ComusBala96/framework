@@ -11,6 +11,6 @@ class HelperFacade extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'orian-helper-functions';
+        return 'orians-helpers';
     }
 }

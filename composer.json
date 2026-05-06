@@ -1,7 +1,7 @@
 {
     "name": "orians/framework",
     "description": "A framework package for OrianSoft and OrianSoft Clients.",
-    "version": "1.2.1",
+    "version": "2.0.0",
     "homepage": "https://github.com/ComusBala96/framework",
     "keywords": [
         "OrianSoft",
@@ -18,7 +18,8 @@
         }
     ],
     "require": {
-        "php": "^8.2"
+        "php": "^8.2",
+        "illuminate/support": "^11.0|^12.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.72"
@@ -37,7 +38,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Orian\\Framework\\Providers\\OrianHelperServiceProvider"
+                "Orian\\Framework\\Providers\\OrianServiceProvider"
             ],
             "aliases": {
                 "Helper": "Orian\\Framework\\Facades\\HelperFacade"

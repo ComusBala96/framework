@@ -1,3 +1,3 @@
-export function greet(){
+export function greet() {
     return 'Welcome to Framework.';
 }

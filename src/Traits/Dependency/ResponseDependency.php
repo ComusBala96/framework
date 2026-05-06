@@ -27,25 +27,25 @@ trait ResponseDependency
         if (isset($params['type'])) {
             switch ($params['type']) {
                 case 'noUpdate':
-                    return $this->noUpdate($params);
+                    return $this->noUpdateResponse($params);
                     break;
                 case 'wrong':
-                    return $this->wentWrong($params);
+                    return $this->wentWrongResponse($params);
                     break;
                 case 'success':
-                    return $this->success($params);
+                    return $this->successResponse($params);
                     break;
                 case 'bigError':
-                    return $this->bigErrors($params);
+                    return $this->bigErrorsResponse($params);
                     break;
                 case 'noData':
-                    return $this->noData($params);
+                    return $this->noDataResponse($params);
                     break;
                 case 'validation':
-                    return $this->validation($params);
+                    return $this->validationResponse($params);
                     break;
                 case 'load_html':
-                    return $this->loadHtml($params);
+                    return $this->loadHtmlResponse($params);
                     break;
 
                 default:
@@ -62,14 +62,14 @@ trait ResponseDependency
         return Response::json([
             'success' => false,
             'noUpdate' => true,
-            'title' => '<span class="text-sm text-green-400">' . trans('common.errors.no_message_return') . '</span>',
+            'title' => '<span class="text-sm text-green-400">' . trans('alerts.no_message_return') . '</span>',
             'content' => '',
-            'mobMgs' => 'No Response Defined',
+            'mobMgs' => trans('alerts.no_response_defined'),
             'mobDes' => ''
         ]);
     }
 
-    protected function noUpdate($params)
+    protected function noUpdateResponse($params)
     {
         $title = isset($params['title']) ? $params['title'] : '';
         $content = isset($params['content']) ? $params['content'] : '';
@@ -84,7 +84,7 @@ trait ResponseDependency
         ]);
     }
 
-    protected function success($params)
+    protected function successResponse($params)
     {
         return Response::json([
             'success' => true,
@@ -92,7 +92,7 @@ trait ResponseDependency
         ]);
     }
 
-    protected function validation($params)
+    protected function validationResponse($params)
     {
         return Response::json([
             'success' => false,
@@ -100,9 +100,9 @@ trait ResponseDependency
         ]);
     }
 
-    protected function wentWrong($params)
+    protected function wentWrongResponse($params)
     {
-        $lang = (isset($params['lang'])) ? trans('common.errors.' . $params['lang']) : trans('common.errors.went_wrong');
+        $lang = (isset($params['lang'])) ? trans('alerts.' . $params['lang']) : trans('alerts.went_wrong');
         return Response::json([
             'success' => false,
             'noUpdate' => true,
@@ -113,7 +113,7 @@ trait ResponseDependency
         ]);
     }
 
-    protected function bigErrors($params)
+    protected function bigErrorsResponse($params)
     {
         return Response::json([
             'success' => false,
@@ -122,7 +122,7 @@ trait ResponseDependency
         ]);
     }
 
-    protected function noData($params)
+    protected function noDataResponse($params)
     {
         $image = (isset($params['image'])) ? $params['image'] : 'no';
         $title = (isset($params['title'])) ? $params['title'] : '';
@@ -141,7 +141,7 @@ trait ResponseDependency
         );
     }
 
-    protected function loadHtml($params)
+    protected function loadHtmlResponse($params)
     {
         return Response::json([
             'success' => true,
