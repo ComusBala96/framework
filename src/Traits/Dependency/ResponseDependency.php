@@ -102,7 +102,7 @@ trait ResponseDependency
 
     protected function wentWrongResponse($params)
     {
-        $lang = (isset($params['lang'])) ? trans('alerts.' . $params['lang']) : trans('alerts.went_wrong');
+        $lang = (isset($params['lang'])) ? trans('errors.' . $params['lang']) : trans('alerts.went_wrong');
         return Response::json([
             'success' => false,
             'noUpdate' => true,
