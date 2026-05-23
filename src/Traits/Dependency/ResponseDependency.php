@@ -88,6 +88,9 @@ trait ResponseDependency
     {
         return Response::json([
             'success' => true,
+            'tost' => (isset($params['data']['tost'])) ? $params['data']['tost'] : false,
+            'sweet' => (isset($params['data']['sweet'])) ? $params['data']['sweet'] : false,
+            'reload' => (isset($params['data']['table_reload'])) ? $params['data']['table_reload'] : false,
             'data' => (isset($params['data'])) ? $params['data'] : []
         ]);
     }
@@ -105,7 +108,7 @@ trait ResponseDependency
         $lang = (isset($params['lang'])) ? trans('errors.' . $params['lang']) : trans('alerts.went_wrong');
         return Response::json([
             'success' => false,
-            'noUpdate' => true,
+            'wrong' => true,
             'title' => '<span class="text-sm text-red-600">' . $lang . '</span>',
             'content' => '',
             'mobMgs' => $lang,
