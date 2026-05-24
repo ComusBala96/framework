@@ -28,29 +28,21 @@ trait ResponseDependency
             switch ($params['type']) {
                 case 'noUpdate':
                     return $this->noUpdateResponse($params);
-                    break;
                 case 'wrong':
                     return $this->wentWrongResponse($params);
-                    break;
                 case 'success':
                     return $this->successResponse($params);
-                    break;
                 case 'bigError':
                     return $this->bigErrorsResponse($params);
-                    break;
                 case 'noData':
                     return $this->noDataResponse($params);
-                    break;
                 case 'validation':
                     return $this->validationResponse($params);
-                    break;
                 case 'load_html':
                     return $this->loadHtmlResponse($params);
-                    break;
 
                 default:
                     return $this->noResponse();
-                    break;
             }
         } else {
             return $this->noResponse();
