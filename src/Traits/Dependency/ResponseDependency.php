@@ -78,12 +78,20 @@ trait ResponseDependency
 
     protected function successResponse($params)
     {
+        $data = $params['data'] ?? [];
+        $sweet = $data['sweet'] ?? false;
+        $tost = $data['tost'] ?? true;
+        // Only one can be true
+        if ($sweet) {
+            $tost = false;
+        }
         return Response::json([
             'success' => true,
-            'tost' => (isset($params['data']['tost'])) ? $params['data']['tost'] : false,
-            'sweet' => (isset($params['data']['sweet'])) ? $params['data']['sweet'] : false,
-            'reload' => (isset($params['data']['table_reload'])) ? $params['data']['table_reload'] : false,
-            'data' => (isset($params['data'])) ? $params['data'] : []
+            'tost' => $tost,
+            'sweet' => $sweet,
+            'reload' => $data['reload'] ?? false,
+            'table_reload' => $data['table_reload'] ?? false,
+            'data' => $data
         ]);
     }
 
