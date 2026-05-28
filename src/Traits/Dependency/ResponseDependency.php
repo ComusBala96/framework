@@ -26,13 +26,17 @@ trait ResponseDependency
     {
         if (isset($params['type'])) {
             switch ($params['type']) {
+                case 'success':
+                    return $this->successResponse($params);
+                case 'error':
+                    return $this->errorResponse($params);
+                case 'warning':
+                    return $this->warningResponse($params);
                 case 'noUpdate':
                     return $this->noUpdateResponse($params);
                 case 'wrong':
-                    return $this->wentWrongResponse($params);
-                case 'success':
-                    return $this->successResponse($params);
-                case 'bigError':
+                    return $this->wrongResponse($params);
+                case 'bigErrors':
                     return $this->bigErrorsResponse($params);
                 case 'noData':
                     return $this->noDataResponse($params);
@@ -40,7 +44,6 @@ trait ResponseDependency
                     return $this->validationResponse($params);
                 case 'load_html':
                     return $this->loadHtmlResponse($params);
-
                 default:
                     return $this->noResponse();
             }
@@ -48,107 +51,228 @@ trait ResponseDependency
             return $this->noResponse();
         }
     }
-
-    protected function noResponse()
+    protected function successResponse($params)
     {
+        $data = $params['data'] ?? [];
+        $message = $data['message'] ?? trans('alerts.action_success');
+        $sweet = $data['sweet'] ?? false;
+        $tost = $data['tost'] ?? true;
+        $toastr = $data['toastr'] ?? false;
+        // Only one can be true
+        if ($tost) {
+            $sweet = false;
+            $toastr = false;
+        }
+        if ($sweet) {
+            $tost = false;
+            $toastr = false;
+        }
+        if ($toastr) {
+            $sweet = false;
+            $tost = false;
+        }
         return Response::json([
-            'success' => false,
-            'noUpdate' => true,
-            'title' => '<span class="text-sm text-green-400">' . trans('alerts.no_message_return') . '</span>',
-            'content' => '',
-            'mobMgs' => trans('alerts.no_response_defined'),
-            'mobDes' => ''
+            'type' => 'success',
+            'success' => true,
+            'sweet' => $sweet,
+            'tost' => $tost,
+            'toastr' => $toastr,
+            'reload' => $data['reload'] ?? false,
+            'reload_table' => $data['reload_table'] ?? false,
+            'message' => $message,
+            'data' => $data,
+        ]);
+    }
+    protected function errorResponse($params)
+    {
+        $data = $params['data'] ?? [];
+        $message = $data['message'] ?? trans('alerts.went_wrong');
+        $sweet = $data['sweet'] ?? true;
+        $tost = $data['tost'] ?? false;
+        $toastr = $data['toastr'] ?? false;
+        // Only one can be true
+        if ($sweet) {
+            $tost = false;
+            $toastr = false;
+        }
+        if ($tost) {
+            $sweet = false;
+            $toastr = false;
+        }
+        if ($toastr) {
+            $sweet = false;
+            $tost = false;
+        }
+        return Response::json([
+            'type' => 'error',
+            'error' => true,
+            'sweet' => $sweet,
+            'tost' => $tost,
+            'toastr' => $toastr,
+            'reload' => $data['reload'] ?? false,
+            'reload_table' => $data['reload_table'] ?? false,
+            'message' => $message,
+            'data' => $data
+        ]);
+    }
+    protected function warningResponse($params)
+    {
+        $data = $params['data'] ?? [];
+        $message = $data['message'] ?? trans('alerts.went_wrong');
+        $sweet = $data['sweet'] ?? true;
+        $tost = $data['tost'] ?? false;
+        $toastr = $data['toastr'] ?? false;
+        // Only one can be true
+        if ($sweet) {
+            $tost = false;
+            $toastr = false;
+        }
+        if ($tost) {
+            $sweet = false;
+            $toastr = false;
+        }
+        if ($toastr) {
+            $sweet = false;
+            $tost = false;
+        }
+        return Response::json([
+            'type' => 'warning',
+            'warning' => true,
+            'sweet' => $sweet,
+            'tost' => $tost,
+            'toastr' => $toastr,
+            'reload' => $data['reload'] ?? false,
+            'reload_table' => $data['reload_table'] ?? false,
+            'message' => $message,
+            'data' => $data ?? []
         ]);
     }
 
     protected function noUpdateResponse($params)
     {
-        $title = isset($params['title']) ? $params['title'] : '';
-        $content = isset($params['content']) ? $params['content'] : '';
-        return Response::json([
-            'success' => false,
-            'noUpdate' => true,
-            'title' => '<span class="text-sm text-red-600">' . $title . '</span>',
-            'content' => '<span class="text-sm text-red-600">' . $content . '</span>',
-            'mobMgs' => strip_tags($title),
-            'mobDes' => strip_tags($content),
-            'data' => isset($params['data']) ? collect($params['data']) : null
-        ]);
-    }
-
-    protected function successResponse($params)
-    {
         $data = $params['data'] ?? [];
-        $sweet = $data['sweet'] ?? false;
-        $tost = $data['tost'] ?? true;
+        $message = $data['message'] ?? trans('alerts.went_wrong');
+        $sweet = $data['sweet'] ?? true;
+        $tost = $data['tost'] ?? false;
+        $toastr = $data['toastr'] ?? false;
         // Only one can be true
         if ($sweet) {
             $tost = false;
+            $toastr = false;
+        }
+        if ($tost) {
+            $sweet = false;
+            $toastr = false;
+        }
+        if ($toastr) {
+            $sweet = false;
+            $tost = false;
         }
         return Response::json([
-            'success' => true,
-            'tost' => $tost,
+            'type' => 'noUpdate',
+            'noUpdate' => true,
             'sweet' => $sweet,
+            'tost' => $tost,
+            'toastr' => $toastr,
             'reload' => $data['reload'] ?? false,
-            'table_reload' => $data['table_reload'] ?? false,
+            'reload_table' => $data['reload_table'] ?? false,
+            'message' => $message,
             'data' => $data
         ]);
     }
 
-    protected function validationResponse($params)
+    protected function wrongResponse($params)
     {
+        $data = $params['data'] ?? [];
+        $message = $data['message'] ?? trans('alerts.went_wrong');
+        $sweet = $data['sweet'] ?? true;
+        $tost = $data['tost'] ?? false;
+        $toastr = $data['toastr'] ?? false;
+        // Only one can be true
+        if ($sweet) {
+            $tost = false;
+            $toastr = false;
+        }
+        if ($tost) {
+            $sweet = false;
+            $toastr = false;
+        }
+        if ($toastr) {
+            $sweet = false;
+            $tost = false;
+        }
         return Response::json([
-            'success' => false,
-            'errors' => (isset($params['errors'])) ? $params['errors'] : []
-        ]);
-    }
-
-    protected function wentWrongResponse($params)
-    {
-        $lang = (isset($params['lang'])) ? trans('errors.' . $params['lang']) : trans('alerts.went_wrong');
-        return Response::json([
-            'success' => false,
+            'type' => 'wrong',
             'wrong' => true,
-            'title' => '<span class="text-sm text-red-600">' . $lang . '</span>',
-            'content' => '',
-            'mobMgs' => $lang,
-            'mobDes' => ''
+            'sweet' => $sweet,
+            'tost' => $tost,
+            'toastr' => $toastr,
+            'reload' => $data['reload'] ?? false,
+            'reload_table' => $data['reload_table'] ?? false,
+            'message' => $message,
+            'data' => $data ?? []
         ]);
     }
 
     protected function bigErrorsResponse($params)
     {
+        $data = $params['data'] ?? [];
+        $errors = $params['errors'] ?? [];
         return Response::json([
-            'success' => false,
+            'type' => 'bigError',
             'bigError' => true,
-            'bigErrors' => (isset($params['errors'])) ? $params['errors'] : [],
+            'errors' => $errors,
+            'data' => $data,
         ]);
     }
 
     protected function noDataResponse($params)
     {
-        $image = (isset($params['image'])) ? $params['image'] : 'no';
-        $title = (isset($params['title'])) ? $params['title'] : '';
-        $message = (isset($params['message'])) ? $params['message'] : '';
-        $url = (isset($params['url'])) ? $params['url'] : 'no';
-        $btn_text = (isset($params['btn_text'])) ? $params['btn_text'] : '';
-        return view(
-            'common.view.no_data_found',
-            [
-                'image' => $image,
-                'title' => $title,
-                'message' => $message,
-                'url' => $url,
-                'btn_text' => $btn_text
-            ]
-        );
+        $image = $params['image'] ?? url(config("meta.no_data"));
+        $message =  $params['message'] ?? trans("errors.no_history");
+        $btn =
+            "<button data-prop=" .
+            json_encode(["page" => "addPage", "server" => "no"]) .
+            " class='viewAction rounded-md bg-blue-500 px-3 py-1 text-xs text-white hover:bg-blue-600'>
+                <i class='fa fa-plus'></i>
+                <span class='ml-1'>" .
+            __("buttons.add") .
+            "</span></button>";
+        $button =  $params['button'] ?? $btn;
+        return view('common.view.no_data_found', ['image' => $image, 'message' => $message, 'button' => $button]);
+    }
+
+    protected function validationResponse($params)
+    {
+        $data = $params['data'] ?? [];
+        $errors = $data['errors'] ?? [];
+        return Response::json([
+            'type' => 'validation',
+            'error' => true,
+            'errors' =>  $errors,
+            'data' =>  $data
+        ]);
     }
 
     protected function loadHtmlResponse($params)
     {
+        $data = $params['data'] ?? [];
+        $view = $data['view'] ?? [];
         return Response::json([
+            'type' => 'load_view',
             'success' => true,
-            'data' => isset($params['data']) ? collect($params['data']) : []
+            'view' => collect($view),
+            'data' => $data
+        ]);
+    }
+
+    protected function noResponse()
+    {
+        return Response::json([
+            'type' => 'noResponse',
+            'error' => true,
+            'sweet' => true,
+            'message' => '<span class="text-sm text-green-400">' . trans('alerts.no_message_return') . '</span>',
         ]);
     }
 }
