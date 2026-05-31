@@ -48,30 +48,4 @@ trait CheckExistsDependency
         }
         return $errors;
     }
-
-    public function checkIfRoleInUse($op = [])
-    {
-        $errors = [];
-        $rows = $op['rows'] ?? [];
-        $search = $op['search'] ?? [];
-        $targetModel = $op['targetModel'] ?? [];
-        $targetCol = $op['targetCol'] ?? [];
-        $denied = $op['denied'] ?? [];
-        $exists = $op['exists'] ?? [];
-        $in = $op['in'] ?? [];
-        foreach ($targetModel as $key => $model) {
-            $roleIds = $rows?->pluck($search[$key])?->toArray() ?? [];
-            $modelIds = $model->get()->roles->pluck($search[$key])->toArray();
-            dd($modelIds);
-            if (count($rows) > 0) {
-                foreach ($rows as $row_keys => $value) {
-                    if (in_array($value[$search[$key]], $targetIds)) {
-                        $errors[] = trans('alerts.bigError', ['exists' => $exists[$key], 'denied' => $denied[$key], 'in' => $in[$key]]);
-                        break;
-                    }
-                }
-            }
-        }
-        return $errors;
-    }
 }
