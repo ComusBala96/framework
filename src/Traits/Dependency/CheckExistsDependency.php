@@ -2,6 +2,9 @@
 
 namespace Orian\Framework\Traits\Dependency;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
 trait CheckExistsDependency
 {
     public function checkExists($request, $data, $select = ['*'])
@@ -24,28 +27,34 @@ trait CheckExistsDependency
         return $data;
     }
 
-    public function checkInUse($op)
+    public function checkInUse(array $op): array
     {
         $errors = [];
-        $rows = $op['rows'] ?? [];
+        $rows = collect($op['rows'] ?? []);
         $search = $op['search'] ?? [];
         $targetModel = $op['targetModel'] ?? [];
-        $targetCol = $op['targetCol'] ?? [];
+        $targetCols = $op['targetCol'] ?? [];
         $denied = $op['denied'] ?? [];
         $exists = $op['exists'] ?? [];
         $in = $op['in'] ?? [];
         foreach ($targetModel as $key => $model) {
-            $ids = $rows?->pluck($search[$key])?->toArray() ?? [];
-            $targetIds = $model->whereIn($targetCol[$key], $ids)->select([$targetCol[$key]])->pluck($targetCol[$key])->toArray();
-            if (count($rows) > 0) {
-                foreach ($rows as $row_keys => $value) {
-                    if (in_array($value[$search[$key]], $targetIds)) {
-                        $errors[] = trans('alerts.bigError', ['exists' => $exists[$key], 'denied' => $denied[$key], 'in' => $in[$key]]);
-                        break;
-                    }
-                }
+            $ids = $rows->pluck($search[$key])->filter()->unique()->values()->toArray();
+            if (empty($ids)) {
+                continue;
+            }
+            $targetIds = $this->getTargetIds($model, $targetCols[$key], $ids);
+            if (array_intersect($ids, $targetIds)) {
+                $errors[] = trans('alerts.bigError', ['exists' => $exists[$key] ?? '', 'denied' => $denied[$key] ?? '', 'in' => $in[$key] ?? '']);
             }
         }
         return $errors;
+    }
+
+    private function getTargetIds(object | string $model, string $column, array $ids): array
+    {
+        if ($model instanceof Model) {
+            return $model::query()->whereIn($column, $ids)->pluck($column)->toArray();
+        }
+        return DB::table($model)->whereIn($column, $ids)->pluck($column)->toArray();
     }
 }
