@@ -7,6 +7,7 @@ use Orian\Framework\Console\Commands\OriansInstallCommand;
 use Orian\Framework\Console\Commands\OriansManifestCommand;
 use Orian\Framework\Console\Commands\OriansSyncCommand;
 use Orian\Framework\Helper\Helper;
+use Orian\Framework\Services\ICO\ICO;
 use Orian\Framework\Support\Manifest;
 
 class OrianServiceProvider extends ServiceProvider
@@ -18,6 +19,9 @@ class OrianServiceProvider extends ServiceProvider
     {
         $this->app->singleton('orians-helpers', function ($app) {
             return new Helper();
+        });
+        $this->app->singleton('orians-ico', function ($app) {
+            return new ICO();
         });
         $this->mergeConfigFrom(__DIR__ . '/../config/orian.php', 'orian');
         $this->mergeConfigFrom(__DIR__ . '/../config/core.php', 'core');
