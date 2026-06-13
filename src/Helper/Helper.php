@@ -42,7 +42,7 @@ class Helper
                 $constraint->upsize();
             });
             if ($type == 'variant') {
-                $img->save(public_path($path . $name . '_' . $item['width'] . 'x' . $item['height'] . '.' . $ext));
+                $img->save(public_path($path . $name . $item['size'] . $ext));
             } else {
                 $img->save(public_path($path . $name . '.' . $ext));
             }
